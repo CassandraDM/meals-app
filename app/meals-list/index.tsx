@@ -13,20 +13,28 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 
 export default function CocktailsList() {
+  // Calling the useRouter hook to navigate to different screens
   const router = useRouter();
+  // Function to navigate to the screen of the details of one meal
   const goToMealDetailsScreen = (id: number) => {
     router.push(`/meals-list/${id}`);
   };
 
   return (
     <View style={styles.container}>
+      {/* Calling the header component */}
       <Header />
       <View style={styles.content}>
         <Text style={styles.h1}>Our Meals</Text>
+        {/* Using the flatlist to display all the meals ... 
+        NOTE : It is the same thing as the Scrollview but 
+         the FlatList only renders the items that are 
+         visible on the screen */}
         <FlatList
           data={meals}
           keyExtractor={(meal) => meal.id.toString()}
           renderItem={({ item }) => (
+            // The TouchableOpacity is like a button but it allow us to style it as we want
             <TouchableOpacity
               style={styles.mealItem}
               onPress={() => goToMealDetailsScreen(item.id)}
@@ -40,6 +48,7 @@ export default function CocktailsList() {
           )}
         />
       </View>
+      {/* Calling the footer component */}
       <Footer />
     </View>
   );

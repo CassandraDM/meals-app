@@ -5,8 +5,8 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 
 export default function MealDetailsScreen() {
-  const { id } = useLocalSearchParams();
-  const meal = meals.find((meal) => meal.id.toString() === id);
+  const { id } = useLocalSearchParams(); // Get the id from the URL
+  const meal = meals.find((meal) => meal.id.toString() === id); // Find the meal by id
 
   if (!meal) {
     // If the meal is not found, display a message
@@ -19,13 +19,16 @@ export default function MealDetailsScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Display the Header component */}
       <Header />
       <View style={styles.content}>
+        {/* Display the meal image, title, description, and category */}
         <Image source={{ uri: meal.image }} style={styles.image} />
         <Text style={styles.h1}>{meal.title}</Text>
         <Text style={styles.text}>{meal.description}</Text>
         <Text style={styles.category}>{meal.category}</Text>
       </View>
+      {/* Display the Footer component */}
       <Footer />
     </View>
   );

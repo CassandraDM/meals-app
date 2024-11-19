@@ -5,15 +5,19 @@ import Header from "./component/Header";
 import Footer from "./component/Footer";
 
 export default function Index() {
+  // Calling the useRouter hook to navigate to different screens
   const router = useRouter();
+  // Function to navigate to the screen of the list of the meals
   const goToMealsListScreen = () => {
     router.push(`/meals-list`);
   };
+  // Function to navigate to the screen of the details of one meal
   const goToMealDetailsScreen = (id: number) => {
     router.push(`/meals-list/${id}`);
   };
   return (
     <View style={styles.container}>
+      {/* Calling the Header component */}
       <Header />
       <View style={styles.descriptionContainer}>
         <Text style={styles.text}>
@@ -27,6 +31,8 @@ export default function Index() {
         <Text style={styles.title}>Our Top 3:</Text>
         {meals.slice(0, 3).map((meal) => (
           <View key={meal.id}>
+            {/* The TouchableOpacity is like a button but it
+            allow us to style it as we want */}
             <TouchableOpacity
               style={styles.mealItem}
               onPress={() => goToMealDetailsScreen(meal.id)}
@@ -43,6 +49,7 @@ export default function Index() {
       >
         <Text style={styles.buttonText}>View All Our Meals!</Text>
       </TouchableOpacity>
+      {/* Calling the Footer component */}
       <Footer />
     </View>
   );
