@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,17 +9,37 @@ import {
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-import meals from "../meals.json";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 
-export default function CocktailsList() {
+export default function MealsList() {
   // Calling the useRouter hook to navigate to different screens
   const router = useRouter();
   // Function to navigate to the screen of the details of one meal
-  const goToMealDetailsScreen = (id: number) => {
-    router.push(`/meals-list/${id}`);
+  const goToMealDetailsScreen = (idMeal: string) => {
+    router.push(`/meals-list/${idMeal}`);
   };
+
+  // Using the useState hook to store the meals data
+  const [meals, setMeals] = useState<
+    { idMeal: string; strMeal: string; strMealThumb: string }[]
+  >([]);
+
+  //  useEffect hook is use to perform a side effect of fetching the data from the API with an async function
+  //  async function is used so the code can still be read while waiting for the data to be fetched
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(
+          "https://www.themealdb.com/api/json/v1/1/search.php?f=a"
+        );
+        const data = await response.json();
+        setMeals(data.meals);
+      } catch (error) {
+        console.error("Error fetching meals:", error);
+      }
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -30,23 +51,27 @@ export default function CocktailsList() {
         NOTE : It is the same thing as the Scrollview but 
          the FlatList only renders the items that are 
          visible on the screen */}
-        <FlatList
-          data={meals}
-          keyExtractor={(meal) => meal.id.toString()}
-          renderItem={({ item }) => (
-            // The TouchableOpacity is like a button but it allow us to style it as we want
-            <TouchableOpacity
-              style={styles.mealItem}
-              onPress={() => goToMealDetailsScreen(item.id)}
-            >
-              <Text style={styles.mealTitle}>{item.title}</Text>
-              <Image
-                source={{ uri: item.image }}
-                style={{ width: "100%", height: 200 }}
-              />
-            </TouchableOpacity>
-          )}
-        />
+        {meals.length === 0 ? (
+          <Text style={styles.text}>Loading...</Text>
+        ) : (
+          <FlatList
+            data={meals}
+            keyExtractor={(meal) => meal.idMeal}
+            renderItem={({ item }) => (
+              // The TouchableOpacity is like a button but it allow us to style it as we want
+              <TouchableOpacity
+                style={styles.mealItem}
+                onPress={() => goToMealDetailsScreen(item.idMeal)}
+              >
+                <Image
+                  source={{ uri: item.strMealThumb }}
+                  style={styles.mealImage}
+                />
+                <Text style={styles.mealTitle}>{item.strMeal}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
       </View>
       {/* Calling the footer component */}
       <Footer />
@@ -56,42 +81,44 @@ export default function CocktailsList() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
     flex: 1,
     justifyContent: "space-between",
-    paddingHorizontal: 20,
+    alignItems: "center",
+    backgroundColor: "black",
+    padding: 20,
   },
   content: {
     flex: 1,
     width: "100%",
   },
   h1: {
-    fontSize: 32,
-    color: "pink",
-    marginBottom: 10,
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#ffffff",
+    marginBottom: 20,
     textAlign: "center",
   },
-  mealsContent: {
-    flex: 1,
-    width: "100%",
+  text: {
+    fontSize: 16,
+    color: "#dddddd",
+    textAlign: "center",
   },
   mealItem: {
+    marginBottom: 20,
     backgroundColor: "#333",
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
+    borderRadius: 10,
+    overflow: "hidden",
     borderColor: "pink",
     borderWidth: 1,
   },
+  mealImage: {
+    width: "100%",
+    height: 200,
+  },
   mealTitle: {
     fontSize: 18,
-    color: "white",
     fontWeight: "bold",
-    textAlign: "center",
-  },
-
-  text: {
-    fontSize: 16,
-    color: "white",
+    color: "#ffffff",
+    padding: 10,
   },
 });
