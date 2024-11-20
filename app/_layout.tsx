@@ -1,9 +1,10 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   return (
-    <>
+    <GestureHandlerRootView>
       {/* Style the bar where the hour, battery, ... is displayed */}
       <StatusBar barStyle="light-content" backgroundColor="black" />
       <Stack>
@@ -23,7 +24,8 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen name="meals-list" options={{ headerShown: false }} />
+        <Stack.Screen name="user" options={{ headerShown: false }} />
       </Stack>
-    </>
+    </GestureHandlerRootView>
   );
 }
