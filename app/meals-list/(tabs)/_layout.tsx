@@ -29,6 +29,22 @@ export default function MealsListTabs() {
         }}
       />
       <Tabs.Screen
+        name="create-meal"
+        options={{
+          title: "Create Meal",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTintColor: "pink",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="random"
         options={{
           title: "Random Meal",

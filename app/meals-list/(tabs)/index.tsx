@@ -12,6 +12,7 @@ import {
 import { useRouter } from "expo-router";
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
+import { Swipeable } from "react-native-gesture-handler";
 
 export default function MealsList() {
   // Calling the useRouter hook to navigate to different screens
@@ -48,6 +49,22 @@ export default function MealsList() {
     })();
   }, []);
 
+  const MealActions = ({ meal }: { meal: { idMeal: string } }) => {
+    return (
+      <View style={styles.actionsContainer}>
+        <TouchableOpacity style={styles.deleteButton}>
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => goToMealDetailsScreen(meal.idMeal)}
+          style={styles.seeMealButton}
+        >
+          <Text style={styles.seeMealText}>See Meal</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Calling the header component */}
@@ -78,17 +95,16 @@ export default function MealsList() {
             data={meals}
             keyExtractor={(meal) => meal.idMeal}
             renderItem={({ item }) => (
-              // The TouchableOpacity is like a button but it allow us to style it as we want
-              <TouchableOpacity
-                style={styles.mealItem}
-                onPress={() => goToMealDetailsScreen(item.idMeal)}
-              >
-                <Image
-                  source={{ uri: item.strMealThumb }}
-                  style={styles.mealImage}
-                />
-                <Text style={styles.mealTitle}>{item.strMeal}</Text>
-              </TouchableOpacity>
+              // The onPress function is used to call the goToMealDetailsScreen function
+              <Swipeable renderRightActions={() => <MealActions meal={item} />}>
+                <View style={styles.mealItem}>
+                  <Image
+                    source={{ uri: item.strMealThumb }}
+                    style={styles.mealImage}
+                  />
+                  <Text style={styles.mealTitle}>{item.strMeal}</Text>
+                </View>
+              </Swipeable>
             )}
           />
         )}
@@ -160,5 +176,32 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     padding: 10,
+  },
+  actionsContainer: {
+    padding: 10,
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  deleteButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  seeMealButton: {
+    backgroundColor: "pink",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  seeMealText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
