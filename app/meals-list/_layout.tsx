@@ -12,7 +12,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: "Home",
+            title: "Meals",
             headerStyle: {
               backgroundColor: "black",
             },
@@ -22,7 +22,32 @@ export default function RootLayout() {
             },
           }}
         />
-        <Stack.Screen name="meals-list" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="[id]"
+          options={{
+            title: "Meal Details",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTintColor: "pink",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="search/[query]"
+          options={{
+            title: "Results",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTintColor: "pink",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
       </Stack>
     </>
   );

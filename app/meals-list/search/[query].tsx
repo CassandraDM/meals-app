@@ -1,4 +1,4 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -12,13 +12,13 @@ import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 
 export default function ResultsScreen() {
+  const router = useRouter(); // Calling the useRouter hook to navigate to different screens
   // Using the useState hook to store the meals data
   const [meals, setMeals] = useState<
     { idMeal: string; strMeal: string; strMealThumb: string }[]
   >([]);
   const { query } = useLocalSearchParams(); // Get the search term from the params
 
-  console.log("recherche :", query);
   // useEffect hook is use to perform a side effect of fetching the data from the API with an async function
   // async function is used so the code can still be read while waiting for the data to be fetched
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function ResultsScreen() {
     })();
   }, [query]);
 
-  function goToMealDetailsScreen(idMeal: string): void {
+  function goToMealDetailsScreen(idMeal: string) {
     router.push(`/meals-list/${idMeal}`);
   }
 
@@ -54,7 +54,7 @@ export default function ResultsScreen() {
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.mealItem}
-                onPress={() => router.push(`/meals-list/${item.idMeal}`)}
+                onPress={() => goToMealDetailsScreen(item.idMeal)}
               >
                 <Image
                   source={{ uri: item.strMealThumb }}
@@ -76,13 +76,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    alignItems: "center",
     backgroundColor: "black",
     paddingHorizontal: 20,
   },
   content: {
     flex: 1,
-    padding: 20,
+    paddingVertical: 20,
   },
   h1: {
     fontSize: 28,
@@ -98,21 +97,21 @@ const styles = StyleSheet.create({
   },
   mealItem: {
     flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-    backgroundColor: "#1f1f1f",
-    borderRadius: 10,
-    overflow: "hidden",
+    backgroundColor: "#333",
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    borderColor: "pink",
+    borderWidth: 1,
+  },
+  mealTitle: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
   },
   mealImage: {
     width: 100,
     height: 100,
     marginRight: 10,
-  },
-  mealTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#ffffff",
-    padding: 10,
   },
 });
