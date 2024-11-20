@@ -27,6 +27,11 @@ export default function Index() {
     router.push(`/meals-list/${idMeal}`);
   };
 
+  // Function to navigate to the screen of a random meal
+  const goToRandomMeal = () => {
+    router.push(`/meals-list/random`);
+  };
+
   //  useEffect hook is use to perform a side effect of fetching the data from the API with an async function
   //  async function is used so the code can still be read while waiting for the data to be fetched
   useEffect(() => {
@@ -79,6 +84,9 @@ export default function Index() {
         onPress={() => goToMealsListScreen()}
       >
         <Text style={styles.buttonText}>View All Our Meals!</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => goToRandomMeal()}>
+        <Text style={styles.buttonText}>View A Random Meal!</Text>
       </TouchableOpacity>
       {/* Calling the Footer component */}
       <Footer />

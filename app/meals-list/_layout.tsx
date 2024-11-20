@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
 
-export default function RootLayout() {
+export default function MealsListLayout() {
   return (
     <>
       {/* Style the bar where the hour, battery, ... is displayed */}
@@ -39,6 +39,19 @@ export default function RootLayout() {
           name="search/[query]"
           options={{
             title: "Results",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTintColor: "pink",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="random"
+          options={{
+            title: "Random Meal",
             headerStyle: {
               backgroundColor: "black",
             },
