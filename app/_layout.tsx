@@ -48,6 +48,19 @@ export default function RootLayout() {
             },
           }}
         />
+        <Stack.Screen
+          name="meals-list/search/[query]"
+          options={{
+            title: "Results",
+            headerStyle: {
+              backgroundColor: "black",
+            },
+            headerTintColor: "pink",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
       </Stack>
     </>
   );

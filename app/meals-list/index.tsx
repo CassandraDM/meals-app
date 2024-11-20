@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  TextInput,
 } from "react-native";
 import { useRouter } from "expo-router";
 import Header from "../component/Header";
@@ -14,10 +15,16 @@ import Footer from "../component/Footer";
 
 export default function MealsList() {
   // Calling the useRouter hook to navigate to different screens
+  const [search, setSearch] = useState("");
+
   const router = useRouter();
   // Function to navigate to the screen of the details of one meal
   const goToMealDetailsScreen = (idMeal: string) => {
     router.push(`/meals-list/${idMeal}`);
+  };
+
+  const goToResultsScreen = () => {
+    router.push(`/meals-list/search/${search}`);
   };
 
   // Using the useState hook to store the meals data
@@ -31,7 +38,7 @@ export default function MealsList() {
     (async () => {
       try {
         const response = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/search.php?f=a"
+          "https://www.themealdb.com/api/json/v1/1/search.php?s="
         );
         const data = await response.json();
         setMeals(data.meals);
@@ -46,6 +53,19 @@ export default function MealsList() {
       {/* Calling the header component */}
       <Header />
       <View style={styles.content}>
+        <TextInput
+          style={styles.search}
+          placeholder="Looking for something specific?"
+          placeholderTextColor="#888"
+          value={search}
+          onChangeText={setSearch}
+        />
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={goToResultsScreen}
+        >
+          <Text style={styles.searchButtonText}>Search</Text>
+        </TouchableOpacity>
         <Text style={styles.h1}>Our Meals</Text>
         {/* Using the flatlist to display all the meals ... 
         NOTE : It is the same thing as the Scrollview but 
@@ -87,9 +107,29 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     padding: 20,
   },
+  search: {
+    backgroundColor: "#1f1f1f",
+    color: "#ffffff",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  searchButton: {
+    backgroundColor: "pink",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  searchButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   content: {
     flex: 1,
     width: "100%",
+    paddingTop: 20,
   },
   h1: {
     fontSize: 28,
