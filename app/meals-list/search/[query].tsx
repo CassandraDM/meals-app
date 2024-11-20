@@ -36,7 +36,7 @@ export default function ResultsScreen() {
   }, [query]);
 
   function goToMealDetailsScreen(idMeal: string) {
-    router.push(`/meals-list/${idMeal}`);
+    router.push(`/meals-list/details/${idMeal}`);
   }
 
   return (

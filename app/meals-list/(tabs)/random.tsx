@@ -1,11 +1,9 @@
-import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
-import Header from "../component/Header";
-import Footer from "../component/Footer";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import Header from "../../component/Header";
+import Footer from "../../component/Footer";
 
-export default function MealDetailsScreen() {
-  // Using the useState hook to store the meals data
+export default function RandomMealScreen() {
   const [meal, setMeal] = useState<{
     idMeal: string;
     strMeal: string;
@@ -13,15 +11,12 @@ export default function MealDetailsScreen() {
     strMealThumb: string;
     strCategory: string;
   } | null>(null);
-  const { id } = useLocalSearchParams(); // Get the id from the params
 
-  // useEffect hook is use to perform a side effect of fetching the data from the API with an async function
-  // async function is used so the code can still be read while waiting for the data to be fetched
   useEffect(() => {
     (async () => {
       try {
         const response = await fetch(
-          "http://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id
+          "https://www.themealdb.com/api/json/v1/1/random.php"
         );
         const data = await response.json();
         setMeal(data.meals[0]);

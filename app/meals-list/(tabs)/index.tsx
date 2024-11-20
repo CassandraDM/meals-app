@@ -10,8 +10,8 @@ import {
   TextInput,
 } from "react-native";
 import { useRouter } from "expo-router";
-import Header from "../component/Header";
-import Footer from "../component/Footer";
+import Header from "../../component/Header";
+import Footer from "../../component/Footer";
 
 export default function MealsList() {
   // Calling the useRouter hook to navigate to different screens
@@ -20,7 +20,7 @@ export default function MealsList() {
   const router = useRouter();
   // Function to navigate to the screen of the details of one meal
   const goToMealDetailsScreen = (idMeal: string) => {
-    router.push(`/meals-list/${idMeal}`);
+    router.push(`/meals-list/details/${idMeal}`);
   };
 
   const goToResultsScreen = () => {

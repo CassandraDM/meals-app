@@ -24,7 +24,7 @@ export default function Index() {
   };
   // Function to navigate to the screen of the details of one meal
   const goToMealDetailsScreen = (idMeal: string) => {
-    router.push(`/meals-list/${idMeal}`);
+    router.push(`/meals-list/details/${idMeal}`);
   };
 
   // Function to navigate to the screen of a random meal
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
     padding: 10,
     borderRadius: 5,
-    marginVertical: 20,
   },
   buttonText: {
     color: "#ffffff",
