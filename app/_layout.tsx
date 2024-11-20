@@ -24,7 +24,7 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen name="meals-list" options={{ headerShown: false }} />
-        <Stack.Screen name="user" options={{ headerShown: false }} />
+        <Stack.Screen name="userindex" options={{ headerShown: false }} />
       </Stack>
     </GestureHandlerRootView>
   );

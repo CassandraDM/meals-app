@@ -1,11 +1,4 @@
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import Header from "./component/Header";
@@ -34,7 +27,7 @@ export default function Index() {
 
   // Function to navigate to the screen of the user
   const goToUser = () => {
-    router.push(`/user/user`);
+    router.push(`/userindex`);
   };
 
   //  useEffect hook is use to perform a side effect of fetching the data from the API with an async function
