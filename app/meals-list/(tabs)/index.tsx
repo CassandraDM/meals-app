@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -13,6 +12,7 @@ import { useRouter } from "expo-router";
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import { Swipeable } from "react-native-gesture-handler";
+import useGetMeals from "@/hook/useGetMeals";
 
 export default function MealsList() {
   // Calling the useRouter hook to navigate to different screens
@@ -28,26 +28,7 @@ export default function MealsList() {
     router.push(`/meals-list/search/${search}`);
   };
 
-  // Using the useState hook to store the meals data
-  const [meals, setMeals] = useState<
-    { idMeal: string; strMeal: string; strMealThumb: string }[]
-  >([]);
-
-  //  useEffect hook is use to perform a side effect of fetching the data from the API with an async function
-  //  async function is used so the code can still be read while waiting for the data to be fetched
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/search.php?s="
-        );
-        const data = await response.json();
-        setMeals(data.meals);
-      } catch (error) {
-        console.error("Error fetching meals:", error);
-      }
-    })();
-  }, []);
+  const meals = useGetMeals();
 
   const MealActions = ({ meal }: { meal: { idMeal: string } }) => {
     return (

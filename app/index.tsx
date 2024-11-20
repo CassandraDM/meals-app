@@ -1,14 +1,12 @@
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { useEffect, useState } from "react";
+import useGetMeals from "@/hook/useGetMeals";
 import { useRouter } from "expo-router";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 
 export default function Index() {
-  // Using the useState hook to store the meals data
-  const [meals, setMeals] = useState<
-    { idMeal: string; strMeal: string; strMealThumb: string }[]
-  >([]);
+  // Using the custom hook to get the meals data
+  const meals = useGetMeals();
   // Calling the useRouter hook to navigate to different screens
   const router = useRouter();
   // Function to navigate to the screen of the list of the meals
@@ -29,22 +27,6 @@ export default function Index() {
   const goToUser = () => {
     router.push(`/userindex`);
   };
-
-  //  useEffect hook is use to perform a side effect of fetching the data from the API with an async function
-  //  async function is used so the code can still be read while waiting for the data to be fetched
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/search.php?s="
-        );
-        const data = await response.json();
-        setMeals(data.meals);
-      } catch (error) {
-        console.error("Error fetching meals:", error);
-      }
-    })();
-  }, []);
 
   return (
     <View style={styles.container}>
