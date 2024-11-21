@@ -1,30 +1,10 @@
-import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
+import useGetRandomMeal from "@/hook/useGetRandomMeal";
 
 export default function RandomMealScreen() {
-  const [meal, setMeal] = useState<{
-    idMeal: string;
-    strMeal: string;
-    strInstructions: string;
-    strMealThumb: string;
-    strCategory: string;
-  } | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/random.php"
-        );
-        const data = await response.json();
-        setMeal(data.meals[0]);
-      } catch (error) {
-        console.error("Error fetching meals:", error);
-      }
-    })();
-  }, []);
+  const meal = useGetRandomMeal();
 
   if (!meal) {
     // If the meal is not found, display a message
