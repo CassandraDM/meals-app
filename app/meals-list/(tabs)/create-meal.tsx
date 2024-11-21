@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { handleCreate } from "@/service/create-meal";
 
 export default function CreateMealScreen() {
   const [name, setName] = useState("");
@@ -26,23 +27,6 @@ export default function CreateMealScreen() {
     setCategory(text);
   };
 
-  const handleCreate = async () => {
-    const response = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/create.php",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          instructions,
-          category,
-        }),
-      }
-    );
-    console.log("~ 🐈‍⬛🐈 ~ handleCreate ~ response:", response);
-  };
   return (
     <View style={styles.container}>
       <Header />
@@ -73,7 +57,10 @@ export default function CreateMealScreen() {
           value={category}
           onChangeText={handleChangeCategory}
         />
-        <TouchableOpacity style={styles.searchButton} onPress={handleCreate}>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={async () => await handleCreate(name, instructions, category)}
+        >
           <Text style={styles.searchButtonText}>Create Meal</Text>
         </TouchableOpacity>
       </View>
